@@ -1,0 +1,170 @@
+.works-slider {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  @include desktop {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.works-slider__pics {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  width: 64%;
+  &:before {
+    content: attr(data-slide);
+    position: absolute;
+    top: 50%;
+    transform: translateY(-60%);
+    line-height: 1;
+    left: 93%;
+    z-index: -1;
+    font-size: 400px;
+    font-weight: 800;
+    color: #E6E6E6;
+  }
+  @include desktop {
+    max-height: 400px;
+    width: 90%;
+    align-self: flex-start;
+    margin-bottom: 50px;
+    &:before {
+      left: 93%;
+      top: 70%;
+    }
+  }
+  @include tablets {
+    width: 100%;
+    &:before {
+      display: none;
+    }
+  }
+}
+
+.works-slider__image {
+  min-width: 100%;
+  object-fit: cover;
+}
+
+.works-slider__thumbs-block {
+  position: absolute;
+  display: flex;
+  justify-content: flex-end;
+  height: 100px;
+  top: 65%;
+  right: 0;
+}
+
+.works-slider__thumbs {
+  display: flex;
+  width: 80%;
+  height: 100%;
+  @include tablets {
+    display: none;
+  }
+}
+
+.active {
+  border: 3px solid #DC9322;
+}
+.works-slider__thumb {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+
+.works__slider-buttons {
+  height: 100px;
+  position: absolute;
+  top: 63%;
+  left: 100%;
+  @include tablets {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    top: 0;
+    left: 0;
+  }
+}
+
+.works-slider__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background: #333C49;
+  width: 55px;
+  height: 55px;
+}
+
+.works-slider__btn--left {
+  transform: rotate(180deg);
+}
+
+.works-slider__arrow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 17px;
+  height: 17px;
+  fill: #fff;
+}
+
+.works-slider__info {
+  width: 25%;
+  @include desktop {
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+  @include tablets {
+    width: 100%;
+  }
+}
+
+.works-slider__tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+  @include desktop {
+    justify-content: center;
+  }
+}
+
+.works-slider__tag {
+  margin: 0 8px 8px 0;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.works-slider__title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #333C49;
+  margin-bottom: 30px;
+}
+
+.works-slider__desc {
+  color: rgba(51,60,73, .8);
+  line-height: 30px;
+  font-weight: 600;
+  margin-bottom: 44px;
+}
+
+.works-slider__link {
+  @include desktop {
+    display: flex;
+    justify-content: center;
+  }
+}

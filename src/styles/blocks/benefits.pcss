@@ -1,0 +1,81 @@
+.benefits {
+  padding: 140px 0 20px 0;
+  background: url(~images/content/benefitsBg.jpg) center center / cover no-repeat;
+  position: relative;
+  z-index: 1;
+}
+
+.benefits__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.benefits__title-block {
+  width: 65%;
+  @include tablets {
+    width: 95%;
+  }
+}
+
+.benefits__title {
+  font-size: 30px;
+  margin-bottom: 50px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.benefits__title-desc {
+  font-size: 16px;
+  color: rgba(255,255,255, .8);
+  line-height: 30px;
+  margin-bottom: 80px;
+}
+
+.benefits__skills {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  @include desktop {
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: center;
+    &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 100%;
+      width: 120%;
+      height: 40px;
+      background-color: #fff;
+    }
+  }
+  @include phones {
+    
+  }
+}
+
+.benefits__image {
+  margin: 80px 0 -80px -50px;
+  @include desktop {
+    transform: rotate(-90deg);
+    max-width: 500px;
+    margin: 0 0 -140px;
+  }
+  @include phones {
+    margin: 0 0 -29%;
+  }
+  
+}
+
+.benefits__pic {
+  object-fit: contain;
+}
+
+.benefits__wrapper {
+  margin-right: 80px;
+  @include desktop {
+    margin: 0;
+  }
+}

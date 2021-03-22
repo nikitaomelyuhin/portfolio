@@ -1,0 +1,28 @@
+.scroll {
+  display: flex;
+  @include tablets {
+    display: none;
+  }
+}
+
+.scroll__text {
+  display: flex;
+  position: relative;
+}
+
+.scroll__down {
+  
+}
+
+.scroll__icon {
+  width: 13px;
+  height: 13px;
+  fill: #fff;
+  position: absolute;
+  right: -25px;
+  top: 5px;
+  transform: rotate(90deg);
+  &:last-child {
+    margin-top: 5px;
+  }
+}

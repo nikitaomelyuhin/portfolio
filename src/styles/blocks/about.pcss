@@ -1,0 +1,85 @@
+.about {
+  padding-bottom: 260px;
+  @include desktop {
+    padding-bottom: 100px;
+  }
+}
+
+.about__container {
+  display: flex;
+  justify-content: center;
+  @include tablets {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.about__user {
+  width: 37%;
+  @include desktop {
+    width: 35%;
+    margin-right: 40px;
+  }
+  @include tablets {
+    width: 95%;
+  }
+  @include phones {
+    margin-bottom: 40px;
+  }
+}
+
+.about__text {
+  color: #fff;
+  flex: 1;
+  @include tablets {
+    margin-top: 20px;
+    padding: 0 25px;
+  }
+  @include phones {
+    padding: 0 10px;
+  }
+}
+
+.about__text-sub {
+  font-size: 16px;
+  color: rgba(255,255,255, .8);
+  margin-bottom: 18px;
+}
+
+.about__text-name {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 25px;
+}
+
+.about__text-desc {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255,255,255, .8);
+  margin-bottom: 70px;
+  line-height: 30px;
+  
+}
+
+.about__text-additional {
+  font-weight: 400;
+  font-size: 16px;
+  font-style: italic;
+  position: relative;
+  color: rgba(255,255,255, .8);
+  line-height: 30px;
+  &:before {
+    content: '*';
+    color: rgba(219,2,0, .5);
+    font-size: 48px;
+    position: absolute;
+    left: -45px;
+    top: 10px;
+  }
+  @include tablets {
+    margin-left: 10px;
+  }
+  @include phones {
+    margin-left: 25px;
+  }
+}

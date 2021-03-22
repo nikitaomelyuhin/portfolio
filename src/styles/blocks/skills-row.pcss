@@ -1,0 +1,28 @@
+.skills-row {
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+}
+
+.skills-row__list {
+  display: flex;
+  @include tablets {
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+  }
+}
+
+.skills-row__title {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+
+.skills-row__item {
+  margin-right: 40px;
+  &:last-child {
+    margin: 0;
+  }
+  @include tablets {
+    margin: 0;
+  }
+}

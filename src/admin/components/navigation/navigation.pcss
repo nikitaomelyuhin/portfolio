@@ -1,0 +1,27 @@
+
+.list {
+  display: flex;
+}
+
+.item {
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.active {
+  color: #383BCF;
+  border-bottom: 3px solid #383BCF;
+  &:hover {
+    border: none;
+  }
+}
+
+.link {
+  display: flex;
+  padding: 26px 56px;
+  &:hover {
+    color: #383BCF;
+    border-bottom: 3px solid #383BCF;
+  }
+}

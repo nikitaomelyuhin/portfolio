@@ -1,0 +1,40 @@
+.hamburger-menu {
+  display: flex;
+  position: absolute;
+  width: 70%;
+  right: -100%;
+  top: 0;
+  opacity: 0;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 20% 50px;
+  transition: linear .3s;
+  &__nav {
+    color: #414C63;
+    margin-bottom: 95px;
+  }
+  @include phones {
+    width: 100%;
+    height: 100vh;
+    padding: 40% 50px;
+  }
+}
+
+.hamburger-menu__nav-list {
+  display: flex;
+  flex-direction: column;
+  font-size: 18PX;
+  font-weight: 600;
+}
+
+.hamburger-menu__nav-item {
+  margin-bottom: 21px;
+  &:last-child {
+    margin: 0;
+  }
+}
+
+.hamburger-menu__icons-list {
+  display: flex;
+  justify-content: space-between;
+}

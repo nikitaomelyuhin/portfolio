@@ -1,0 +1,116 @@
+extends ./main.layout.pug
+
+block content
+  .welcome-page
+    section.hero
+      .container.hero__container
+        header.header
+          a.logo(href="#") НО
+          nav.nav.header__nav
+            ul.nav__list
+              - var navItems = ["Обо мне", "Навыки", "Работы", "Отзывы"]
+              each item in navItems
+                li.nav__item
+                  a.nav__link(href="#")= item
+          .icons.header__icons
+            ul.icons__list
+              - var icons = ["insta", "github", "vk", "message"]
+              each item in icons
+                li.icons__item
+                  a.icons__link(href="#")
+                    +icon(item, "icons__icon")
+          .hamburger
+            .hamburger__plank
+          .hamburger-menu
+            nav.nav.hamburger-menu__nav
+              ul.nav__list.hamburger-menu__nav-list
+                - var navItems = ["Главная", "Обо мне", "Навыки", "Работы", "Отзывы"]
+                each item in navItems
+                  li.nav__item.hamburger-menu__nav-item
+                    a.nav__link(href="#")= item
+            .icons.hamburger-menu__icons
+              ul.icons__list.hamburger-menu__icons-list
+                - var icons = ["insta", "github", "vk", "message"]
+                each item in icons
+                  li.icons__item
+                    a.icons__link(href="#")
+                      +icon(item, "icons__icon icons__icon--dark")
+        .hero__content
+          .hero__subtitle Личный сайт #[br] веб разработчика
+          h1.hero__title Никита Омелюхин
+        .scroll
+          a.scroll__text(href="#") Скролл
+            .scroll__down
+              +icon("arrow-down", "scroll__icon")
+              +icon("arrow-down", "scroll__icon")
+    section.about
+      .container.about__container
+        .about__user
+          .user
+            .user__avatar
+              .user__avatar-style
+                +image("content/avatar.jpg", "user__avatar-img")
+            .user__data
+              table.user__table
+                - var userInfo = [["Проживаю:", "Киров"], ["Возраст:", "26 лет"], ["Родился:", "28 июня 1994"] ]
+                each item in userInfo
+                  tr.user__table-row
+                    td.user__table-title #{item[0]}
+                    td #{item[1]}
+        .about__text
+          .about__text-sub Привет, меня зовут
+          h2.about__text-name Омелюхин Никита
+          .about__text-desc
+            p Я занимаюсь разработкой современных сайтов и приложений. Мне нравится делать интересные и современные проекты.
+          .about__text-additional
+            p Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+  section.benefits
+    .container.benefits__container
+      .benefits__title-block
+        h2.benefits__title Чем я могу быть полезен вам
+        .benefits__title-desc
+          p Этот сайт я сделал в рамках обучения в Школе онлайн образования LoftSchool. Чуть позже я освежу в нём свой контент. А пока посмотрите, как тут всё классно и красиво!
+      .benefits__skills
+        .benefits__image
+          +image("content/benefitsKeyboard.png", "benefits__pic")
+        .benefits__wrapper
+          .skills
+            #skills-component
+  section.works
+    .container
+      h2.section-title.works__title Мои работы
+      .works__content
+        #works-component
+  section.reviews-section
+    .container
+      #reviews-component
+  footer.footer
+    .container.footer__container
+      .footer__copyright-block
+        .footer__copyright &copy; 2020
+        .footer__copyright-userdata
+          .footer__copyright-name Никита Омелюхин
+          .footer__copyright-text Личный сайт веб-разработчика
+      .footer__data
+        .footer__menu
+          nav.nav
+            ul.nav__list
+              each item in navItems
+                li.nav__item.nav__item--footer
+                  a.nav__link(href="#")= item
+        .footer__data-content
+          .footer__data-wrapper
+            .footer__data-text Этот сайт я сделал в рамках обучения в Школе онлайн образования Loftschool
+            .footer__data-socials
+              .footer-icons
+                ul.footer-icons__list
+                  - var icons = ["insta", "vk", "github",  "message"]
+                  each item in icons
+                    li.footer-icons__item
+                      a.footer-icons__link(href="#")
+                        +icon(item, "footer-icons__icon")
+          .footer__quote
+            .text-quote
+              .text-quote__content Всегда пишите код так, будто сопровождать его будет склонный к насилию психопат, который знает где вы живете
+              .text-quote__author Martin Golding
+
