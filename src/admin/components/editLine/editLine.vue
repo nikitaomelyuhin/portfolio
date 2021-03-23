@@ -72,6 +72,8 @@ export default {
           return
       } else {
         this.$emit("approve", this.value);
+        this.editmode = false;
+        console.log(this.value);
       }
 
     },

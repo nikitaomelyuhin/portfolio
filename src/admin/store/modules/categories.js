@@ -7,11 +7,16 @@ export default {
     SET_CATEGORIES: (state, categories) => (state.data = categories),
     ADD_CATEGORY: (state, category) => state.data.unshift(category),
     DELETE_CATEGORY: (state, categoryId) => {
-      state.data.filter(category => categoryId !== category.id)
-      console.log(state.data);
+      state.data = state.data.filter(category => {
+        if (categoryId !== category.id) {
+          return category
+        }
+      })
     },
-    EDIT_CATEGORY: (state, categories) => {
-      console.log(categories);
+    EDIT_CATEGORY: (state, category) => {
+      state.data = state.data.map(categoryItem => {
+        return categoryItem.id === category.id ? category : categoryItem
+      })
     },
 
     ADD_SKILL: (state, newSkill) => {
@@ -49,8 +54,8 @@ export default {
   actions: {
     async edit({commit}, category) {
       try {
-        const { data } = await this.$axios.post(`/categories/${category.id}`, category.category)
-        commit("EDIT_CATEGORY", data)
+        const { data } = await this.$axios.post(`/categories/${category.id}`, category)
+        commit("EDIT_CATEGORY", data.category)
       } catch (error) {
         throw new Error("Ошибка")
       }

@@ -19,9 +19,11 @@
         li.item(v-for="category in categories", :key="category.id")
           category(
             @remove="deleteCategory(category.id)"
-            @approve="editCategory(category)"
+            @approve="editCategory(category.id)"
             :categoryId="category.id"
             :title="category.category"
+            @inputValue="getInputValue"
+            :category="category"
             :skills="category.skills"
             @create-skill="createSkill($event, category.id)"
             @edit-skill="editSkill"
@@ -46,7 +48,7 @@ export default {
     return {
       categoryOptions: {
         emptyCatIsShown: false,
-        categoryTitle: "",
+        categoryTitle: '',
         removedCategory: true
       }
     };
@@ -54,7 +56,7 @@ export default {
   computed: {
     ...mapState("categories", {
       categories: state => state.data
-    })
+    }),
   },
   methods: {
     ...mapActions({
@@ -134,7 +136,6 @@ export default {
       }
     },
     async deleteCategory(categoryId) {
-      console.log(categoryId);
       try {
         await this.deleteCategoryAction(categoryId);
         this.shownTooltip({
@@ -145,14 +146,27 @@ export default {
         console.log("deleteError");
       }
     },
-    async editCategory(category) {
-      console.log(category);
+    async editCategory(categoryId) {
+      const newCategory = {
+        id: categoryId,
+        title: this.categoryOptions.categoryTitle
+      }
       try {
-        await this.editCategoryAction(category);
+        await this.editCategoryAction(newCategory);
+        this.shownTooltip({
+          text: "Категория изменена",
+          type: "success"
+        })
       } catch (error) {
-        console.log("editError");
+        this.shownTooltip({
+          text: "Не удалось изменить категорию",
+          type: "error"
+        })
       }
     },
+    getInputValue(value) {
+      this.categoryOptions.categoryTitle = value;
+    }
   },
   created() {
     this.fetchCategoryAction();

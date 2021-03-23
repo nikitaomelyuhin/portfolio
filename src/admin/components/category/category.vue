@@ -5,7 +5,8 @@
       slot="title" 
       v-model="categoryTitle"
       @remove="$emit('remove', $event)"
-      @approve="$emit('approve', $event)"
+      @approve="approveCategory"
+      @input="getInputValue"
       )
     template(slot="content")
       ul.skills(v-if="empty === false")
@@ -39,6 +40,10 @@ export default {
     skills: {
       type: Array,
       default: () => []
+    },
+    category: {
+      type: Object,
+      default: {}
     }
   },
   components: {
@@ -47,6 +52,7 @@ export default {
   data() {
     return {
       categoryTitle: this.title,
+      categoryObj: this.category
     }
   },
   methods: {
@@ -55,6 +61,12 @@ export default {
         skill: skill,
         categoryId: this.categoryId
         })
+    },
+    approveCategory(value) {
+      this.$emit("approve", value)
+    },
+    getInputValue(value) {
+      this.$emit("inputValue", value)
     }
   }
 }
@@ -63,10 +75,6 @@ export default {
 <style lang="pcss" scoped>
 .item {
   margin-bottom: 30px;
-  
-  &:last-child {
-    margin-bottom: 0;
-  }
 }
 .bottom-line {
   padding-top: 70px;
