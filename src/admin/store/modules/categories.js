@@ -14,8 +14,14 @@ export default {
       })
     },
     EDIT_CATEGORY: (state, category) => {
-      state.data = state.data.map(categoryItem => {
-        return categoryItem.id === category.id ? category : categoryItem
+      console.log(category);
+      state.data = state.data.filter(categoryItem => {
+        if (categoryItem.id === category.id) {
+          categoryItem.category = category.category;
+          return categoryItem;
+        } else {
+          return categoryItem
+        }
       })
     },
 

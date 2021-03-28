@@ -65,6 +65,7 @@ export default {
   },
   methods: {
     async onApprove() {
+      console.log("log");
       if (this.title.trim() === this.value.trim()) {
         this.editmode = false;
       } else if((await this.$validate()) === false) {

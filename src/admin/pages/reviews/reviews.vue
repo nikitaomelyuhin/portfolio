@@ -11,7 +11,7 @@
           ul.reviews
             li.reviews__add-work.reviews__item(v-if="addMode === false")
               button-component(type="square" title="Добавить отзыв")
-            li.reviews__item(v-for="review in reviews")
+            li.reviews__item(v-for="review in reviews" :key="review.id")
               card-review(:review="review")
 
 </template>

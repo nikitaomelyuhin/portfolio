@@ -14,6 +14,7 @@
         li.item(v-if="categoryOptions.emptyCatIsShown")
           category(
             @remove="deleteCategory"
+            @inputValue="getInputValue"
             @approve="createCategory", empty
             )
         li.item(v-for="category in categories", :key="category.id")
@@ -23,7 +24,6 @@
             :categoryId="category.id"
             :title="category.category"
             @inputValue="getInputValue"
-            :category="category"
             :skills="category.skills"
             @create-skill="createSkill($event, category.id)"
             @edit-skill="editSkill"
@@ -49,9 +49,8 @@ export default {
       categoryOptions: {
         emptyCatIsShown: false,
         categoryTitle: '',
-        removedCategory: true
       }
-    };
+    }
   },
   computed: {
     ...mapState("categories", {
@@ -75,13 +74,13 @@ export default {
         ...skill,
         category: categoryId
       }
+      skill.title = "";
+      skill.percent = "";
       await this.addSkillAction(newSkill);
       this.shownTooltip({
           text: "Скилл добавлен",
           type: "success"
         })
-      skill.title = "";
-      skill.percent = "";
       } catch (error) {
         this.shownTooltip({
           text: error.response.data.error,
@@ -130,7 +129,7 @@ export default {
         })
       } catch (error) {
         this.shownTooltip({
-          text: error.response.data.error,
+          text: "Не удалось создать категорию",
           type: "error"
         })
       }

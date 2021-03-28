@@ -41,10 +41,6 @@ export default {
       type: Array,
       default: () => []
     },
-    category: {
-      type: Object,
-      default: {}
-    }
   },
   components: {
     card, editLine, skill, skillAddLine

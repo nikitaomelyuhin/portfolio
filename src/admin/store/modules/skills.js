@@ -1,5 +1,8 @@
 export default {
   namespaced: true,
+  state: {
+    data: [],
+  },
   actions: {
     async add({commit}, skill) {
       try {
