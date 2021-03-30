@@ -10,18 +10,30 @@
           add-work-block(
             v-if="mode === 'add'"
             :showForm="showForm"
+            @addWork="addWork"
+            @closeForm="closeForm"
           )
           add-work-block(
             v-if="mode === 'edit'"
             :showForm="showForm"
             :currentWork="currentWork"
             :mode="mode"
+            @updateWork="updateWork"
+            @closeForm="closeForm"
           )
           ul.works
-            li.works__add-work.works__item
-              button-component(type="square" @click="openAddingForm")
-            li.works__item(v-for="work in works" :key="work.id")
+            li.works__add-work.works__item(
+              v-if="showForm === false"
+            )
+              button-component(
+                type="square" 
+                @click="openAddingForm"
+              )
+            li(:class="['works__item', {disable: disabled}]"
+              v-for="work in works" 
+              :key="work.id")
               card-work(
+                :works="works"
                 :work="work"
                 @deleteWork="deleteWork"
                 @editWork="editWork"
@@ -44,8 +56,9 @@ export default {
   data() {
     return {
       showForm: false,
-      mode: "add",
-      currentWork: {}
+      mode: "normal",
+      currentWork: {},
+      disabled: false
     }
   },
   computed: {
@@ -62,30 +75,44 @@ export default {
       shownTooltip: "tooltips/show"
     }),
     openAddingForm() {
-      // this.showForm = true;
+      this.showForm = true;
       this.mode = "add";
     },
-    // async handleSubmit(newWork) {
-    //   try {
-    //     await this.addNewWork(newWork);
-    //     this.shownTooltip({
-    //       text: "Работа добавлена",
-    //       type: "success"
-    //     })
-    //   } catch (error) {
-    //     this.shownTooltip({
-    //       text: "Не удалось добавить работу",
-    //       type: "error"
-    //     })
-    //   }
-    //   newWork.title = '';
-    //   newWork.link = '';
-    //   newWork.description = '';
-    //   newWork.techs = '';
-    //   newWork.photo = {};
-    //   newWork.preview = '';
-    // },
+    async addWork(newWork) {
+      try {
+        await this.addNewWork(newWork);
+        this.showForm = false;
+        newWork = {};
+        this.mode = "normal";
+        this.shownTooltip({
+          text: "Работа добавлена",
+          type: "success"
+        })
+      } catch (error) {
+        this.shownTooltip({
+          text: "Не удалось добавить работу",
+          type: "error"
+        })
+      }
+    },
+    async updateWork(modifiedWork) {
+      try {
+        await this.updateWorkAction(modifiedWork);
+        this.mode = "normal";
+        this.showForm = false;
+        this.shownTooltip({
+          text: "Работа изменена",
+          type: "success"
+        })
+      } catch (error) {
+        this.shownTooltip({
+          text: "Не удалось изменть работу",
+          type: "error"
+        })
+      }
+    },
     async deleteWork(workId) {
+      await this.closeForm();
       try {
         await this.deleteWorkAction(workId);
         this.shownTooltip({
@@ -99,11 +126,15 @@ export default {
         })
       }
     },
-    editWork(currentWork, mode, showForm) {
+    closeForm() {
+      this.mode = "";
+      this.showForm = false;
+    },
+    async editWork(currentWork, mode, showForm) {
+      await this.closeForm();
       this.mode = mode;
       this.currentWork = currentWork;
       this.showForm = showForm;
-
     },
   },
   created() {

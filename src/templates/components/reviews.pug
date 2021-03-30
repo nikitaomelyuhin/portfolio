@@ -18,7 +18,7 @@ script(type="text/x-template")#reviews-container
             .user-min
               .user-min__avatar
                 .user-min__avatar-style
-                  img(:src="review.pic").user-min__pic
+                  img(:src="`https://webdev-api.loftschool.com/${review.photo}`").user-min__pic
               .user-min__data    
-                .user-min__name {{review.name}}
+                .user-min__name {{review.author}}
                 .user-min__text {{review.occ}}

@@ -48,10 +48,19 @@
                     @click="removeTag(tag)"
                     )
             .form__btns
-              button-component(title="Отмена" plain)
               button-component(
+                title="Отмена" plain
+                @click.prevent="cancelAdding"
+                )
+              button-component(
+                v-if="mode === 'add'"
                 title="Сохранить" 
                 @click.prevent="addNewWork"
+                )
+              button-component(
+                v-if="mode === 'edit'"
+                title="Изменить" 
+                @click.prevent="editWork"
                 )
 
 
@@ -63,7 +72,6 @@ import card from "../card/card.vue";
 import button from "../button/button.vue";
 import input from "../input/input.vue";
 import tag from "../tag/tag.vue";
-import { mapActions, mapState } from "vuex";
 import { renderer, getAbsoluteImgPath }  from "../../helpers/pictures.js";
 import { Validator } from "simple-vue-validator";
 
@@ -147,37 +155,18 @@ export default {
         this.fillFormWithCurrentWorkData();
       }
     },
-    mode(value) {
-      if (value === "add") {
-        this.clearFormFields();
-      }
-    }
   },
   methods: {
     async editWork() {
       if ((await this.$validate()) === false) return;
       this.disableForm = true;
+      this.$emit("updateWork", this.work)
       
     },
     async addNewWork() {
       if ((await this.$validate()) === false) return;
-      this.disableForm = true;
-      // try {
-      //   await this.addNewWorkAction(this.work);
-      //   this.clearFormFields();
-      //   this.shownTooltip({
-      //     text: "Работа создана",
-      //     type: "success"
-      //   });
-      // } catch (error) {
-      //   this.shownTooltip({
-      //     type: "error",
-      //     text: error.message
-      //   });
-      // } finally {
-      //   this.disableForm = false;
-      //   this.validation.reset();
-      // }
+      this.$emit("addWork", this.work)
+      this.renderedPhoto = ""
     },
     removeTag(tag) {
       const tags = [...this.tagsArray];
@@ -187,26 +176,16 @@ export default {
       tags.splice(tagNdx, 1);
       this.newWork.techs = tags.join(", ");
     },
-    handleClick(newWork) {
-      this.$emit("saveWork", newWork);
-    },
-
     handleDragOver(e) {
       e.preventDefault();
       this.hovered = true;
     },
     cancelAdding() {
-      this.clearFormFields();
       this.$emit("closeForm");
-    },
-    clearFormFields() {
-      this.work = {};
-      this.renderedPhoto = "";
     },
     fillFormWithCurrentWorkData() {
       this.work = { ...this.currentWork };
       this.renderedPhoto = getAbsoluteImgPath(this.currentWork.photo);
-      console.log(this.work);
 
     },
     async handlePhotoUpload(e) {

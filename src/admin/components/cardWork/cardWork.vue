@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card-work
+  .card-work(ref="currentWork")
     .card-work__preview
       img.card-work__image(:src="cover")
       ul.tags
@@ -24,6 +24,7 @@ export default {
     tag
   },
   props: {
+    works: Array,
     work: {
       type: Object,
     },
@@ -38,7 +39,12 @@ export default {
     deleteWork() {
       return this.$emit("deleteWork", this.work.id)
     },
-    editWork() {
+    async editWork() {
+      await document.querySelectorAll('.card-work').forEach(work => {
+        work.classList.remove("disable")
+      })
+      // document.querySelector(".card-work").classList.add("disable")
+      this.$refs.currentWork.classList.add("disable")
       return this.$emit("editWork", this.work, this.mode, this.showForm)
     }
   },

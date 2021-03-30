@@ -1,4 +1,6 @@
 import Vue from "vue";
+// import axios from "axios";
+import axios from "../admin/requests"
 
 const buttons = {
   template: "#works-buttons"
@@ -11,7 +13,7 @@ const thumbs = {
 
 const tags = {
   props: ["tags"],
-  template: "#works-tags"
+  template: "#works-tags",
 }
 
 const info = {
@@ -20,7 +22,7 @@ const info = {
   components: {tags},
   computed: {
     tagsArray() {
-      return this.currentWork.skills.split(",");
+      return this.currentWork.techs.split(',')
     }
   },
 }
@@ -74,17 +76,13 @@ new Vue({
           break;
       }
     },
-
-    requireImagesToArray(data) {
-      return data.map((item) => {
-        const requiredImage = require(`../images/content/${item.photo}`).default;
-        item.photo = requiredImage;
-        return item;
-      });
-    },
   },
-  created() {
-    const data = require("../data/works.json");
-    this.works = this.requireImagesToArray(data);
+  async created() {
+    try {
+      const { data } = await axios.get("/works/436")
+      this.works = data
+    } catch (error) {
+      
+    }
   }
 })

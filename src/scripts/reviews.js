@@ -1,6 +1,7 @@
 import Vue from "vue";
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
+import axios from "axios";
 
 new Vue ({
   el: "#reviews-component",
@@ -48,9 +49,14 @@ new Vue ({
       return numberOfSlides;
     }
   },
-  created() {
-    const data = require("../data/reviews.json");
-    this.reviews = this.requireImagesToArray(data);
+  async created() {
+    try {
+      const { data } = await axios.get("https://webdev-api.loftschool.com/reviews/436");
+      this.reviews = data;
+    } catch (error) {
+      
+    }
+    
     this.slideDependsSize();
   },
 })

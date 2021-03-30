@@ -1,6 +1,23 @@
 .card-work {
   background: #fff;
   box-shadow: 5px 5px 10px rgba(61, 61, 61, 0.1);
+
+  &.disable {
+    position: relative;
+    
+    &:before {
+      content: '';
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255,255,255,.6);
+      top: 0;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+  }
 }
 
 .card-work__content {
@@ -77,3 +94,5 @@
   justify-content: space-between;
   margin-bottom: 44px;
 }
+
+

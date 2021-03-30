@@ -7,6 +7,7 @@
             :href="`/admin#/${link.alias}`" 
             :class="['link', {active: link.active}]"
             ) {{link.title}}
+          
 </template>
 
 <script>
@@ -26,6 +27,36 @@ export default {
       links
     }
   },
+  created() {
+    console.log(this.$router.currentRoute.fullPath);
+    switch (this.$router.currentRoute.fullPath) {
+      case "/works":
+        this.links.forEach(item => {
+          item.active = false;
+        })
+        this.links[1].active = true;
+        break;
+    
+      case "/":
+        this.links.forEach(item => {
+          item.active = false;
+        })
+        this.links[0].active = true;
+        
+        break;
+    
+      case "/reviews":
+        this.links.forEach(item => {
+          item.active = false;
+        })
+        this.links[2].active = true;
+        
+        break;
+    
+      default:
+        break;
+    }
+  }
 }
 </script>
 

@@ -12,7 +12,7 @@ export default {
       state.works = works;
     },
     DELETE_WORK(state, workId) {
-      state.data = state.works.filter(work => {
+      state.works = state.works.filter(work => {
         if (work.id !== workId) {
           return work
         }
@@ -25,7 +25,7 @@ export default {
     },
     UPDATE_WORK(state, newWork) {
       state.works = state.works.map(work => {
-        state.work.id === newWork.id ? newWork : work
+        return work.id === newWork.id ? newWork : work
       })
     }
   },

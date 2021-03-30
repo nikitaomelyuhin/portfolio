@@ -13,6 +13,7 @@
   position: relative;
   flex-shrink: 0;
   width: 64%;
+  max-height: 550px;
   &:before {
     content: attr(data-slide);
     position: absolute;
@@ -46,20 +47,22 @@
 .works-slider__image {
   min-width: 100%;
   object-fit: cover;
+  object-position: top center;
 }
 
 .works-slider__thumbs-block {
   position: absolute;
   display: flex;
-  justify-content: flex-end;
-  height: 100px;
-  top: 65%;
+  height: 112px;
+  width: 80%;
+  top: 64%;
   right: 0;
+  overflow: hidden;
 }
 
 .works-slider__thumbs {
   display: flex;
-  width: 80%;
+  align-self: flex-end;
   height: 100%;
   @include tablets {
     display: none;
@@ -71,7 +74,7 @@
 }
 .works-slider__thumb {
   height: 100%;
-  width: 100%;
+  min-width: 120px;
   object-fit: cover;
 }
 
