@@ -1,14 +1,13 @@
 import Vue from 'vue';
-import App from './App.vue';
-import router from './router';
-import VueSimpleValidator from "simple-vue-validator";
-import store from "./store";
-import $axios from "./requests";
+import App from './App.vue'
+import router from './router'
+import store from './store'
+import requests from './requests'
+import SimpleVueValidation from 'simple-vue-validator';
 
+Vue.use(SimpleVueValidation);
 
-Vue.use(VueSimpleValidator, { mode: 'manual' });
-
-store.$axios = $axios;
+store.$axios = requests
 
 new Vue({
   el: "#app-root",

@@ -1,7 +1,7 @@
 import Vue from "vue";
 import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
-import axios from "axios";
+import axios from "../admin/requests"
 
 new Vue ({
   el: "#reviews-component",
@@ -14,6 +14,8 @@ new Vue ({
       reviews: [],
       sliderOptions: {
         slidesPerView: this.slideDependsSize(),
+        grabCursor: true,
+        autoHeight: true,
       },
     }
   },
@@ -51,7 +53,7 @@ new Vue ({
   },
   async created() {
     try {
-      const { data } = await axios.get("https://webdev-api.loftschool.com/reviews/436");
+      const { data } = await axios.get("/reviews/436");
       this.reviews = data;
     } catch (error) {
       

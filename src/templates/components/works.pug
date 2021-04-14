@@ -1,9 +1,10 @@
 script(type="text/x-template")#works-container
-  .works-slider
+  .works-slider(v-if="isLoaded")
     display(
       :currentWork="currentWork"
       :works="works"
       :currentIndex="currentIndex"
+      :direction="direction"
       @slide="slide"
     )
     info(
@@ -15,34 +16,43 @@ script(type="text/x-template")#works-display
     :data-slide="currentIndex + 1"
   )
     img(:src="`https://webdev-api.loftschool.com/${currentWork.photo}`").works-slider__image
-    .works-slider__thumbs-block
-      thumbs(
-        :works="works",
-        :currentWork="currentWork"
-      )
+    thumbs(
+      :direction="direction"
+      :works="works",
+      :currentWork="currentWork"
+    )
     buttons(
       @slide="$emit('slide', $event)"
     )
 
 script(type="text/x-template")#works-thumbs
-  ul.works-slider__thumbs
-    li.works-slider__thumbs-item(
-      v-for="slide in works" :key="slide.id"
-      :class="{active: currentWork.id === slide.id}"
-    )
-      a(:href="slide.link").works-slider__thumbs-link
-        img(:src="`https://webdev-api.loftschool.com/${slide.photo}`").works-slider__thumb
+  .works-slider__thumbs-block
+    transition-group(
+      tag="ul"
+      :css="false"
+      @enter="enterCb"
+      @after-enter="afterCb"
+      @leave="leaveCb"
+      ).works-slider__thumbs
+      li.works-slider__thumbs-item(
+        v-for="slide in slicedSlides" :key="slide.id"
+        :class="{active: currentWork.id === slide.id}"
+      )
+        a(:href="slide.link").works-slider__thumbs-link
+          img(:src="`https://webdev-api.loftschool.com/${slide.photo}`").works-slider__thumb
 
 script(type="text/x-template")#works-buttons
   .works__slider-buttons
     button(
       type="button" 
-      @click="$emit('slide', 'next')"
+      @click="slideNext"
+      :disabled="disable"
       ).works-slider__btn.works-slider__btn--right
       +icon("arrow-down", "works-slider__arrow")
     button(
       type="button"
-      @click="$emit('slide', 'prev')"
+      @click="slidePrev"
+      :disabled="disable"
       ).works-slider__btn.works-slider__btn--left
       +icon("arrow-down", "works-slider__arrow")
 

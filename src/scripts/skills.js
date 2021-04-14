@@ -1,6 +1,5 @@
 import Vue from "vue";
-import axios from "axios";
-import requests from "../admin/requests.js";
+import axios from "../admin/requests.js";
 
 const skillsItem = {
   props: ["skill"],
@@ -42,7 +41,7 @@ new Vue({
   },
   async created() {
     try {
-      const { data } = await axios.get("https://webdev-api.loftschool.com/categories/436")
+      const { data } = await axios.get("/categories/436")
       this.skills = data;
     } catch (error) {
       

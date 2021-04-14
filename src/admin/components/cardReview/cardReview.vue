@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card-review
+  div(:class="['card-review', {disable: (currentReview.id === review.id) && disableForm}]")
     .card-review__user
       avatar.card-review__user-avatar(:src="cover")
       .card-review__user-desc
@@ -8,9 +8,9 @@
     .card-review__content
       .card-review__desc
         p {{review.text}}
-      .card-review__buttons
-        icon(symbol="pencil" title="Править" @click="editReview")
-        icon(symbol="cross" title="Удалить" @click="deleteReview")
+    .card-review__buttons
+      icon(symbol="pencil" title="Править" @click="editReview")
+      icon(symbol="cross" title="Удалить" @click="deleteReview")
 </template>
 
 <script>
@@ -19,9 +19,11 @@ import icon from "../icon/icon.vue";
 
 export default {
   props: {
+    currentReview: Object,
     review: {
       type: Object,
-    }
+    },
+    disableForm: Boolean,
   },
   components: {
     avatar,

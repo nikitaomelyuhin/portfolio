@@ -1,6 +1,8 @@
+@import "../../../styles/mixins.pcss";
 .add-work-block-component {
   margin-bottom: 25px;
   margin-left: -15px;
+  width: 100%;
 }
 
 .title {
@@ -10,10 +12,19 @@
 
 .form {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  @include tablets {
+  }
 }
 
 .form__load {
   margin-right: 34px;
+  margin-bottom: 38px;
+  @include tablets {
+    margin-right: 0;
+    min-width: 320px;
+  }
 }
 
 .uploader {
@@ -25,7 +36,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  min-width: 490px;
+  min-width: 320px;
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -71,13 +82,17 @@
 
 .tags {
   display: flex;
+  flex-wrap: wrap;
   margin-top: 20px;
+  margin-right: -10px;
+  margin-bottom: -10px;
 }
 
 .tag {
   background-color: #F3F6F9;
   border-radius: 30px;
   margin-right: 10px;
+  margin-bottom: 10px;
   font-size: 15px;
   font-weight: 600;
 }

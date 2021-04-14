@@ -8,6 +8,7 @@
   overflow: hidden;
   display: block;
   flex-shrink: 0;
+  transition: .3s;
 
   &:before {
     content: attr(data-text);
@@ -19,5 +20,9 @@
     color: #fff;
     font-weight: 600;
     line-height: 1;
+  }
+
+  &:hover {
+    box-shadow: inset -200px 500px 200px 300px rgba(197, 7, 255, .8);
   }
 }

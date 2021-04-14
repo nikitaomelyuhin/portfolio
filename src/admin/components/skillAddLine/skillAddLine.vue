@@ -56,6 +56,7 @@
       async handleClick() {
         if (await this.$validate() === false) return
         this.$emit('approve', this.skill)
+        this.validation.reset();
       }
     }
   };

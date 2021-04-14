@@ -1,3 +1,4 @@
+@import "../../../styles/mixins.pcss";
 .input__error-tooltip {
   display: none;
   position: absolute;
@@ -87,6 +88,9 @@
   font-weight: 600;
   margin-top: 10px;
   width: 100%;
+  @include phones {
+    width: 300px;
+  }
 }
 
 .input__elem {

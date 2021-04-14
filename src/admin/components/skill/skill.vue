@@ -4,7 +4,13 @@
     .percent {{skill.percent}}
     .buttons
       icon.btn(symbol="pencil" grayscale @click="editmode = true")
-      icon.btn(symbol="trash" grayscale @click="$emit('remove', currentSkill)")
+      icon.btn(symbol="trash" grayscale @click="showPopup")
+    popup(
+      v-if="isShownPopup"
+      :title="skill.title"
+      @confirmDeletion="remove"
+      @cancelDeletion="isShownPopup = false"
+    )
   .skill-component(v-else)
     .title
       app-input(noSidePaddings v-model="currentSkill.title")
@@ -19,6 +25,7 @@
 <script>
   import icon from "../icon/icon.vue"
   import input from "../input/input.vue"
+  import popup from "../popup/popup.vue"
 
   export default {
     props: {
@@ -31,6 +38,7 @@
     data() {
       return {
         editmode: false,
+        isShownPopup: false,
         currentSkill: {
           id: this.skill.id,
           title: this.skill.title,
@@ -41,12 +49,20 @@
     },
     components: {
       icon,
-      appInput: input
+      appInput: input,
+      popup
     },
     methods: {
       approve() {
         this.$emit("approve", this.currentSkill);
         this.editmode = false;
+      },
+      remove() {
+        this.$emit('remove', this.currentSkill)
+        this.isShownPopup = false
+      },
+      showPopup() {
+        this.isShownPopup = true;
       }
     }
   }

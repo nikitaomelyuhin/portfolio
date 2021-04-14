@@ -5,8 +5,8 @@
       .container
         .header
           .title Блок «Работы»
-      .works-container
-        .container
+      .container
+        .works-container
           add-work-block(
             v-if="mode === 'add'"
             :showForm="showForm"
@@ -29,14 +29,15 @@
                 type="square" 
                 @click="openAddingForm"
               )
-            li(:class="['works__item', {disable: disabled}]"
+            li.works__item(
               v-for="work in works" 
               :key="work.id")
               card-work(
-                :works="works"
                 :work="work"
                 @deleteWork="deleteWork"
                 @editWork="editWork"
+                :disableForm="disabled"
+                :currentWork="currentWork"
                 )
 </template>
 
@@ -58,13 +59,23 @@ export default {
       showForm: false,
       mode: "normal",
       currentWork: {},
-      disabled: false
+      disabled: false,
     }
   },
   computed: {
     ...mapState("works", {
       works: state => state.works
     }),
+    
+  },
+  watch: {
+    disableForm() {
+      if (this.showForm === true) {
+        return this.disabled = true
+      } else {
+        return this.disabled = false
+      }
+    }
   },
   methods: {
     ...mapActions({
@@ -100,13 +111,14 @@ export default {
         await this.updateWorkAction(modifiedWork);
         this.mode = "normal";
         this.showForm = false;
+        this.disableForm();
         this.shownTooltip({
           text: "Работа изменена",
           type: "success"
         })
       } catch (error) {
         this.shownTooltip({
-          text: "Не удалось изменть работу",
+          text: "Не удалось изменить работу",
           type: "error"
         })
       }
@@ -126,16 +138,26 @@ export default {
         })
       }
     },
-    closeForm() {
+    async closeForm(e) {
       this.mode = "";
       this.showForm = false;
+      this.disableForm();
     },
     async editWork(currentWork, mode, showForm) {
+      window.scrollTo(pageXOffset, 150);
       await this.closeForm();
       this.mode = mode;
       this.currentWork = currentWork;
       this.showForm = showForm;
+      this.disableForm();
     },
+    async disableForm() {
+      if (this.showForm === true) {
+        return this.disabled = await true
+      } else {
+        return this.disabled = await false
+      }
+    }
   },
   created() {
     this.fetchWorksAction();

@@ -1,5 +1,5 @@
 <template lang="pug">
-  .card-work(ref="currentWork")
+  div(:class="['card-work', {disable: (currentWork.id === work.id) && disableForm}]")
     .card-work__preview
       img.card-work__image(:src="cover")
       ul.tags
@@ -7,12 +7,11 @@
           tag(:title="tag").tag-component
     .card-work__content
       h4.card-work__title {{work.title}}
-      .card-work__desc
-        p {{work.description}}
-      a.card-work__link(:href="work.link") {{"http:" + work.link}}
-      .card-work__buttons
-        icon(symbol="pencil" title="Править" @click="editWork")
-        icon(symbol="cross" title="Удалить" @click="deleteWork")
+      .card-work__desc {{work.description}}
+      a.card-work__link(:href="work.link") {{work.link}}
+    .card-work__buttons
+      icon(symbol="pencil" title="Править" @click="editWork")
+      icon(symbol="cross" title="Удалить" @click="deleteWork")
 </template>
 
 <script>
@@ -24,10 +23,11 @@ export default {
     tag
   },
   props: {
-    works: Array,
+    currentWork: Object,
     work: {
       type: Object,
     },
+    disableForm: Boolean,
   },
   data() {
     return {
@@ -40,11 +40,6 @@ export default {
       return this.$emit("deleteWork", this.work.id)
     },
     async editWork() {
-      await document.querySelectorAll('.card-work').forEach(work => {
-        work.classList.remove("disable")
-      })
-      // document.querySelector(".card-work").classList.add("disable")
-      this.$refs.currentWork.classList.add("disable")
       return this.$emit("editWork", this.work, this.mode, this.showForm)
     }
   },
@@ -54,8 +49,8 @@ export default {
     },
     tagsArray() {
       return this.work.techs.trim().split(',')
-    }
-  }
+    },
+  },
 }
 </script>
 

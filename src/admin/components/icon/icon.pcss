@@ -23,8 +23,13 @@
   &:before {
     content: attr(data-text);
     font-weight: 600;
-    color: rgba(65, 76, 99, 0.4);
+    color: rgba(65, 76, 99, 0.7);
     margin-right: 18px;
+    transition: .3s;
+  }
+
+  &:hover:before {
+    color: rgba(65, 76, 99, 0.4);
   }
 
   &:after {
@@ -38,17 +43,23 @@
   (#3942cc, #c73033, #00d70a, #414c62) {
     &.is-$(icon) {
       &:after {
+        transition: .3s;
         background: svg-load("$(icon).svg", fill=$(fill)) center center / contain no-repeat;
+      }
+      &:hover {
+        &:after {
+          background: svg-load("$(icon).svg", fill=#a0a5b1) center center / contain no-repeat;
+        }
       }
     }
   }
 
   &.grayscale {
-
     @each $icon, $fill in (pencil, cross, tick, trash),
     (#3942cc, #c73033, #00d70a, #414c62) {
       &.is-$(icon) {
         &:after {
+          transition: .3s;
           background: svg-load("$(icon).svg", fill=#a0a5b1) center center / contain no-repeat;
         }
 

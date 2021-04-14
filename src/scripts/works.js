@@ -1,14 +1,75 @@
 import Vue from "vue";
-// import axios from "axios";
 import axios from "../admin/requests"
 
 const buttons = {
-  template: "#works-buttons"
+  data() {
+    return {
+      disable: false,
+    }
+  },
+  template: "#works-buttons",
+  methods: {
+    slideNext() {
+      this.$emit('slide', 'next')
+      setTimeout(() => {
+        this.disable = false
+      }, 500);
+      this.disable = true;
+    },
+    slidePrev() {
+        this.$emit('slide', 'prev')
+        setTimeout(() => {
+          this.disable = false
+        }, 500);
+        this.disable = true;
+    },
+  },
 }
 
 const thumbs = {
-  props: ["works", "currentWork"],
+  props: ["works", "currentWork", "direction"],
   template: "#works-thumbs",
+  computed: {
+    slicedSlides() {
+      return [...this.works].splice(0,4);
+    },
+  },
+  methods: {
+    enterCb(el, done) {
+      const list = el.closest("ul");
+      el.classList.remove("fade")
+      switch (this.direction) {
+        case "prev":
+          el.classList.add("outsided");
+          list.classList.add("transition");
+          list.style.transform = "translateX(178px)"
+          break;
+        case "next":
+          el.classList.add("insided");
+          list.classList.add("transition");
+          list.style.transform = "translateX(-178px)"
+          break;
+      
+        default:
+          break;
+      }
+      list.addEventListener("transitionend", e => done());
+
+    },
+    afterCb(el) {
+      const list = el.closest("ul");
+
+      el.classList.remove("outsided");
+      el.classList.remove("insided");
+      list.style.transform = "translateX(0)"
+      list.classList.remove("transition");
+      
+    },
+    leaveCb(el, done) {
+      el.classList.add("fade");
+      el.addEventListener("transitionend", e => done());
+    },
+  },
 }
 
 const tags = {
@@ -28,9 +89,9 @@ const info = {
 }
 
 const display = {
-  props: ["currentWork", "works", "currentIndex"],
+  props: ["currentWork", "works", "currentIndex", "direction"],
   template: "#works-display",
-  components: {thumbs, buttons}
+  components: {thumbs, buttons},
 }
 
 new Vue({
@@ -41,6 +102,8 @@ new Vue({
     return {
       works: [],
       currentIndex: 0,
+      direction: "next",
+      isLoaded: false,
     }
   },
   computed: {
@@ -54,7 +117,6 @@ new Vue({
     },
   },
   methods: {
-    
     makeInfiniteLoopForNdx(index) {
       const worksNumber = this.works.length - 1;
       if (index < 0) this.currentIndex = worksNumber;
@@ -68,11 +130,13 @@ new Vue({
           this.works.push(this.works[0]);
           this.works.shift();
           this.currentIndex++;
+          this.direction = "next";
           break;
-        case "prev":
-          this.works.unshift(lastItem);
-          this.works.pop();
-          this.currentIndex--;
+          case "prev":
+            this.works.unshift(lastItem);
+            this.works.pop();
+            this.currentIndex--;
+            this.direction = "prev";
           break;
       }
     },
@@ -80,9 +144,10 @@ new Vue({
   async created() {
     try {
       const { data } = await axios.get("/works/436")
-      this.works = data
+      this.works = data;
+      this.isLoaded = true;
     } catch (error) {
-      
+      console.log(error);
     }
   }
 })

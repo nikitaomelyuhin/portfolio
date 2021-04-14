@@ -23,20 +23,20 @@
                 app-input(
                   v-model="review.author"
                   noSidePaddings
-                  )
+                  ).input__component
               .form__content-input  
                 .form__content-input-title Титул автора
                 app-input(
                   v-model="review.occ"
                   noSidePaddings
-                  )
+                  ).input__component
             .form__content-bottom
               .form__content-input.form__content-input-bottom
                 .form__content-input-title Отзыв
                 app-input(
                   v-model="review.text"
                   fieldType="textarea"
-                  )
+                  ).input__component
               .form__btns
                 button-component(
                   title="Отмена" plain

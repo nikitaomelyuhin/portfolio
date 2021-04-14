@@ -4,10 +4,11 @@
       :editModeByDefault="empty" 
       slot="title" 
       v-model="categoryTitle"
-      @remove="$emit('remove', $event)"
+      @remove="showPopup"
       @approve="approveCategory"
       @input="getInputValue"
       )
+    
     template(slot="content")
       ul.skills(v-if="empty === false")
         li.item(v-for="skill in skills" :key="skill.id")
@@ -21,12 +22,19 @@
           :blocked="empty"
           @approve="$emit('create-skill', $event)"
         )
+      popup(
+        v-if="isShownPopup"
+        :title="categoryTitle"
+        @confirmDeletion="remove"
+        @cancelDeletion="isShownPopup = false"
+      )
 </template>
 
 <script>
 import card from "../card/card.vue";
 import editLine from "../editLine/editLine.vue";
 import skill from "../skill/skill.vue";
+import popup from "../../components/popup/popup.vue";
 import skillAddLine from "../skillAddLine/skillAddLine.vue";
 
 export default {
@@ -43,12 +51,14 @@ export default {
     },
   },
   components: {
-    card, editLine, skill, skillAddLine
+    card, editLine, skill, skillAddLine, popup
   },
   data() {
     return {
       categoryTitle: this.title,
-      categoryObj: this.category
+      categoryObj: this.category,
+      isShownPopup: false,
+      isShownForm: false,
     }
   },
   methods: {
@@ -63,18 +73,21 @@ export default {
     },
     getInputValue(value) {
       this.$emit("inputValue", value)
+    },
+    remove($event) {
+      this.$emit('remove', $event);
+      this.isShownPopup = false;
+    },
+    showPopup() {
+      if (this.categoryTitle === "") {
+        return this.$emit("isShownForm", this.isShownForm)
+      }
+      this.isShownPopup = true;
     }
   }
 }
 </script>
 
-<style lang="pcss" scoped>
-.item {
-  margin-bottom: 30px;
-}
-.bottom-line {
-  padding-top: 70px;
-  margin-top: auto;
-  padding-left: 25%;
-}
+<style lang="pcss" src="./category.pcss" scoped>
+
 </style>

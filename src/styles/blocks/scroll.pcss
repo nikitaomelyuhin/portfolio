@@ -1,13 +1,21 @@
 .scroll {
   display: flex;
+  transition: .5s;
   @include tablets {
     display: none;
+  }
+  &:hover .scroll__icon{
+    fill: rgb(208,115,27);
+  }
+  &:hover .scroll__text {
+    color: rgb(208,115,27);
   }
 }
 
 .scroll__text {
   display: flex;
   position: relative;
+  transition: .5s;
 }
 
 .scroll__down {
@@ -22,6 +30,7 @@
   right: -25px;
   top: 5px;
   transform: rotate(90deg);
+  transition: .5s;
   &:last-child {
     margin-top: 5px;
   }

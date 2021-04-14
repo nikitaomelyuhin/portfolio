@@ -107,18 +107,14 @@ export default {
       default: "add",
       validator: value => ["add", "edit"].includes(value)
     },
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     currentWork: Object,
     showForm: Boolean
   },
   data() {
     return {
       hovered: false,
-      disableForm: this.disabled,
       renderedPhoto: "",
+      closeForm: false,
       work: {
         title: "",
         link: "",
@@ -180,8 +176,9 @@ export default {
       e.preventDefault();
       this.hovered = true;
     },
-    cancelAdding() {
-      this.$emit("closeForm");
+    cancelAdding($event) {
+      this.closeForm = true;
+      this.$emit("closeForm", $event);
     },
     fillFormWithCurrentWorkData() {
       this.work = { ...this.currentWork };

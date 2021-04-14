@@ -17,6 +17,7 @@
   display: inline-block;
   border-radius: 100px;
   font-weight: bold;
+  transition: .3s;
 
   &.disabled {
     opacity: .5;
@@ -29,5 +30,14 @@
     text-transform: initial;
     color: $links-color;
     background: transparent;
+    outline: none;
+  }
+
+  &:hover {
+    box-shadow: inset -200px 500px 200px 300px rgba(197, 7, 255, .8);
+    &.plain {
+      box-shadow: none;
+      color: rgba(197, 7, 255, 1);
+    }
   }
 }

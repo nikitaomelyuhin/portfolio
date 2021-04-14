@@ -2,7 +2,7 @@
 .about-page-component
   header-component
   .page-content
-    .container(v-if="categories.length")
+    .container.about-page-component__container(v-if="categories.length")
       .header
         .title Блок «Обо мне»
         round-btn(
@@ -16,6 +16,7 @@
             @remove="deleteCategory"
             @inputValue="getInputValue"
             @approve="createCategory", empty
+            @isShownForm="hideForm"
             )
         li.item(v-for="category in categories", :key="category.id")
           category(
@@ -29,6 +30,7 @@
             @edit-skill="editSkill"
             @remove-skill="removeSkill"
           )
+          
     .container(v-else) loading...
 </template>
 
@@ -42,14 +44,15 @@ export default {
   components: {
     roundBtn: button,
     category,
-    headerComponent
+    headerComponent,
   },
   data() {
     return {
       categoryOptions: {
         emptyCatIsShown: false,
         categoryTitle: '',
-      }
+      },
+      isShownPopup: false,
     }
   },
   computed: {
@@ -137,13 +140,20 @@ export default {
     async deleteCategory(categoryId) {
       try {
         await this.deleteCategoryAction(categoryId);
+        this.isShownPopup = false;
         this.shownTooltip({
           text: "Категория удалена",
           type: "success"
         })
       } catch (error) {
-        console.log("deleteError");
+        this.shownTooltip({
+          text: "Не удалось удалить категорию",
+          type: "error"
+        })
       }
+    },
+    showPopup() {
+      this.isShownPopup = true;
     },
     async editCategory(categoryId) {
       const newCategory = {
@@ -165,6 +175,10 @@ export default {
     },
     getInputValue(value) {
       this.categoryOptions.categoryTitle = value;
+    },
+    hideForm(isShownForm) {
+      this.categoryOptions.emptyCatIsShown = isShownForm;
+
     }
   },
   created() {
@@ -174,5 +188,4 @@ export default {
 </script>
 
 <style lang="pcss" scoped src="./about.pcss">
-  
 </style>

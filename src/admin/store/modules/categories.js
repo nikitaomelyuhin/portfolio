@@ -5,7 +5,10 @@ export default {
   },
   mutations: {
     SET_CATEGORIES: (state, categories) => (state.data = categories),
-    ADD_CATEGORY: (state, category) => state.data.unshift(category),
+    ADD_CATEGORY: (state, category) => {
+      category.skills = Array(0);
+      state.data.unshift(category);
+    },
     DELETE_CATEGORY: (state, categoryId) => {
       state.data = state.data.filter(category => {
         if (categoryId !== category.id) {
@@ -14,7 +17,6 @@ export default {
       })
     },
     EDIT_CATEGORY: (state, category) => {
-      console.log(category);
       state.data = state.data.filter(categoryItem => {
         if (categoryItem.id === category.id) {
           categoryItem.category = category.category;
@@ -87,7 +89,7 @@ export default {
         const { data } = await this.$axios.delete(`/categories/${categoryId}`);
         commit("DELETE_CATEGORY", categoryId)
       } catch (error) {
-        console.log("Какая то ошибка при удалении");
+        console.log(error);
       }
     },
   }

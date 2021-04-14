@@ -5,13 +5,12 @@
       .container
         .header
           .title Блок «Отзывы»
-      .reviews-container
-        .container
+      .container
+        .reviews-container
           add-review-block(
             v-if="mode === 'add'"
             :showForm="showForm"
             @addReview="addReview"
-            :mode="mode"
             @closeForm="closeForm"
           )
           add-review-block(
@@ -31,11 +30,15 @@
                 title="Добавить отзыв"
                 @click="openAddingForm"
                 )
-            li.reviews__item(v-for="review in reviews" :key="review.id")
+            li.reviews__item(
+              v-for="review in reviews" 
+              :key="review.id")
               card-review(
                 :review="review"
                 @deleteReview="removeReview"
                 @editReview="editReview"
+                :disableForm="disabled"
+                :currentReview="currentReview"
                 )
 
 </template>
@@ -59,6 +62,7 @@ export default {
       showForm: false,
       mode: "normal",
       currentReview: {},
+      disabled: false,
     }
   },
   computed: {
@@ -127,17 +131,22 @@ export default {
     closeForm() {
       this.mode = "";
       this.showForm = false;
+      this.disableForm();
     },
     async editReview(currentReview, mode, showForm) {
       await this.closeForm();
       this.mode = mode;
       this.currentReview = currentReview;
       this.showForm = showForm;
+      this.disableForm();
     },
-    closeForm() {
-      this.mode = "";
-      this.showForm = false;
-    },
+    async disableForm() {
+      if (this.showForm === true) {
+        return this.disabled = await true
+      } else {
+        return this.disabled = await false
+      }
+    }
   },
   created() {
     this.fetchReviewsAction();

@@ -65,16 +65,17 @@ export default {
   },
   methods: {
     async onApprove() {
-      console.log("log");
-      if (this.title.trim() === this.value.trim()) {
-        this.editmode = false;
+      if (this.value.length === 0 ) {
+        if (await this.$validate() === false) return
+        
       } else if((await this.$validate()) === false) {
           this.editmode = true;
           return
+      } else if (this.title.trim() === this.value.trim()) {
+        this.editmode = false;
       } else {
         this.$emit("approve", this.value);
         this.editmode = false;
-        console.log(this.value);
       }
 
     },

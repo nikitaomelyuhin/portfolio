@@ -1,5 +1,27 @@
+@import "../../../styles/mixins.pcss";
+.about-page-component {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.about-page-component__container {
+  display: flex;
+  flex-direction: column;
+}
+
 .header {
   display: flex;
+  @include phones {
+    flex-wrap: wrap;
+  }
+}
+
+.title {
+  @include phones {
+    margin-bottom: 25px;
+  }
 }
 
 .page-content {
@@ -19,10 +41,27 @@
   display: flex;
   flex-wrap: wrap;
   margin-top: 50px;
+  width: 100%;
+  margin-right: -30px;
+  align-self: center;
+  @include tablets {
+    margin-right: 0;
+  }
+  @include phones {
+    justify-content: center;
+  }
 }
 
 .item {
   width: calc(100% / 2 - 30px);
   margin-right: 30px;
   margin-bottom: 25px;
+  min-width: 345px;
+  @include tablets{
+    min-width: 100%;
+  }
+  @include phones {
+    margin-right: 0;
+    min-width: 100%;
+  }
 }

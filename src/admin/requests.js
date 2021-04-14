@@ -1,10 +1,9 @@
 import axios from "axios";
+import { getToken, setAuthHttpHeaderToAxios, setToken } from "./helpers/token";
 
-axios.defaults.baseURL = "https://webdev-api.loftschool.com"
+axios.defaults.baseURL = 'https://webdev-api.loftschool.com/';
 
-
-const token = localStorage.getItem('token');
-
+const token = getToken();
 if (token) {
   axios.defaults.headers["Authorization"] = `Bearer ${token}`;
 }
@@ -28,8 +27,5 @@ axios.interceptors.response.use(
   }
 
 )
-
-
-
 
 export default axios;

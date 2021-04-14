@@ -23,8 +23,16 @@
   border-radius: 50%;
   position: relative;
   margin-right: 28px;
+  outline: none;
+  transition: .5s;
   &:last-child {
     margin: 0;
+  }
+  &:hover {
+    border-color: rgb(208,115,27);
+  }
+  &:hover .reviews__arrow{
+    fill: rgb(208,115,27);
   }
 }
 
@@ -40,6 +48,7 @@
   left: 50%;
   transform: translate(-50%, -50%);
   fill: #fff;
+  transition: .5s;
 }
 
 .reviews__content {
