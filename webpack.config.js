@@ -10,7 +10,8 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
 module.exports = (env, argv) => {
   const isProductionBuild = argv.mode === "production";
-  const publicPath = "/";
+  const publicPath = "/portfilio/";
+  const buildDir = "./docs";
 
   const pcss = {
     test: /\.(p|post|)css$/,
@@ -87,7 +88,7 @@ module.exports = (env, argv) => {
     ],
   };
 
-  const config = {
+  const configTemplate  = {
     entry: {
       main: "./src/main.js",
       admin: "./src/admin/main.js",
@@ -135,8 +136,8 @@ module.exports = (env, argv) => {
   };
 
   if (isProductionBuild) {
-    config.devtool = "none";
-    config.plugins = (config.plugins || []).concat([
+    configTemplate.devtool = "none";
+    configTemplate.plugins = (configTemplate.plugins || []).concat([
       new CleanWebpackPlugin(),
       new webpack.DefinePlugin({
         "process.env": {
@@ -149,9 +150,9 @@ module.exports = (env, argv) => {
       }),
     ]);
 
-    config.optimization = {};
+    configTemplate.optimization = {};
 
-    config.optimization.minimizer = [
+    configTemplate.optimization.minimizer = [
       new TerserPlugin({
         cache: true,
         parallel: true,
@@ -161,5 +162,44 @@ module.exports = (env, argv) => {
     ];
   }
 
-  return config;
+  const mainConfig = {
+    ...configTemplate,
+    name: "main-config",
+    entry: {
+      main: ["@babel/polyfill", "./src/main.js"]
+    },
+    output: {
+      filename: "[name].build.js",
+      chunkFilename: "[chunkhash].js",
+      path: path.resolve(__dirname, `${buildDir}`)
+    },
+    plugins: [
+      new HtmlWebpackPlugin({
+        template: "src/index.pug"
+      }),
+      ...configTemplate.plugins
+    ]
+  };
+
+  const adminConfig = {
+    ...configTemplate,
+    name: "admin-config",
+    entry: {
+      admin: ["@babel/polyfill", "./src/admin/main.js"]
+    },
+    output: {
+      publicPath: isProductionBuild ? "" : "./admin/",
+      filename: "[name].build.js",
+      chunkFilename: "[chunkhash].js",
+      path: path.resolve(__dirname, `${buildDir}/admin`)
+    },
+    plugins: [
+      ...configTemplate.plugins,
+      new HtmlWebpackPlugin({
+        template: "src/admin/index.pug"
+      })
+    ]
+  };
+
+  return [mainConfig, adminConfig];
 };
