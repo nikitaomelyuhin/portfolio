@@ -8,3 +8,4 @@ import "./scripts/hamburger";
 import "./scripts/works";
 import "./scripts/reviews";
 import "./scripts/anchorlink";
+import "./admin/main.js";
